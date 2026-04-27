@@ -1,0 +1,11 @@
+# Real-world pattern: a single project-level DEPENDENCY_PROXY variable
+# indirects to the GitLab dependency-proxy prefix
+# in CI, and is empty everywhere else. The job's `image:` line then uses
+# that one variable, so the same YAML works in CI and locally.
+variables:
+  DEPENDENCY_PROXY: "${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/"
+
+build:
+  image: "${DEPENDENCY_PROXY}python:3.13"
+  script:
+    - python --version
